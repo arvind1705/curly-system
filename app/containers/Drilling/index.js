@@ -32,9 +32,8 @@ export function Drilling() {
   const [feed, setFeed] = useState();
   const [drill, setDrill] = useState();
   const [program, setProgram] = useState();
-  const [centerBit, setCenterBit] = useState(false);
   const [peckDrill, setPeckDrill] = useState(false);
-  const [programEnd, setProgramEnd] = useState();
+  const [programEnd, setProgramEnd] = useState(false);
 
   const downloadTxtFile = () => {
     const element = document.createElement('a');
@@ -45,10 +44,6 @@ export function Drilling() {
     element.download = 'myFile.nc';
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
-  };
-
-  const deleteProgram = () => {
-    setProgram('');
   };
 
   const handleSubmit = e => {
@@ -92,9 +87,9 @@ export function Drilling() {
     setProgramEnd('');
     setTool('');
     setrpm('');
-    setCenterBit('');
     setPeckDrill();
     setOperation('');
+    setProgram('');
   };
 
   return (
@@ -171,7 +166,7 @@ export function Drilling() {
                 value={feed}
               />
             </div>
-            <div>
+            {/* <div>
               <label>CenterBit Depth</label>
               <input
                 className="form-group col-sm-4"
@@ -179,14 +174,14 @@ export function Drilling() {
                 onChange={e => setCenterBit(e.target.value)}
                 value={centerBit}
               />
-            </div>
+            </div> */}
             <div>
               <label>Peck Drill</label>
               <input
                 className="form-group col-sm-4"
                 type="checkbox"
-                checked={!!peckDrill}
-                onChange={e => setPeckDrill('true')}
+                checked={peckDrill}
+                onChange={e => setPeckDrill(!peckDrill)}
                 value={peckDrill}
               />
             </div>
@@ -195,8 +190,8 @@ export function Drilling() {
               <input
                 className="form-group col-sm-4"
                 type="checkbox"
-                checked={!!programEnd}
-                onChange={e => setProgramEnd('true')}
+                checked={programEnd}
+                onChange={e => setProgramEnd(!programEnd)}
                 value={programEnd}
               />
             </div>
@@ -211,7 +206,7 @@ export function Drilling() {
           </div>
           <div className="border border-dark">
             <h5>
-              <span className="text-danger">Note</span>
+              <label className="text-danger">Note</label>
             </h5>
             <li>Check the drawing thoroughly before inputing values.</li>
             <li>Use original drills for maximum quality and finish.</li>
@@ -243,13 +238,13 @@ export function Drilling() {
             >
               Download
             </button>
-            <button
+            {/* <button
               type="button"
               className="btn btn-primary w-75"
               onClick={deleteProgram}
             >
               Delete
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
