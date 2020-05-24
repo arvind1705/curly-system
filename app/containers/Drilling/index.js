@@ -32,6 +32,9 @@ export function Drilling() {
   const [feed, setFeed] = useState();
   const [drill, setDrill] = useState();
   const [program, setProgram] = useState();
+  const [centerBit, setCenterBit] = useState(false);
+  const [peckDrill, setPeckDrill] = useState(false);
+  const [programEnd, setProgramEnd] = useState();
 
   const downloadTxtFile = () => {
     const element = document.createElement('a');
@@ -44,8 +47,22 @@ export function Drilling() {
     element.click();
   };
 
+  const deleteProgram = () => {
+    setProgram('');
+  };
+
   const handleSubmit = e => {
-    console.log(tool, operation, offset, rpm, feed, drill, e);
+    console.log(
+      tool,
+      operation,
+      offset,
+      rpm,
+      feed,
+      drill,
+      programEnd,
+      peckDrill,
+      e,
+    );
 
     fetch('http://www.mocky.io/v2/5ec67e7a3200007900d74e90', {
       method: 'POST',
@@ -66,6 +83,18 @@ export function Drilling() {
         setProgram(data.data.replace('/\n/', '(br)'));
       });
     });
+  };
+
+  const clearAll = e => {
+    setDrill('');
+    setFeed('');
+    setOffset('');
+    setProgramEnd('');
+    setTool('');
+    setrpm('');
+    setCenterBit('');
+    setPeckDrill();
+    setOperation('');
   };
 
   return (
@@ -97,7 +126,7 @@ export function Drilling() {
 
           <form className="d-flex flex-column border border-dark default-form">
             <div>
-              <label>Operation No:</label>
+              <label>Operation No</label>
               <input
                 className="form-group col-sm-4 "
                 type="number"
@@ -106,7 +135,7 @@ export function Drilling() {
               />
             </div>
             <div>
-              <label>Tool No:</label>
+              <label>Tool No</label>
               <input
                 className="form-group col-sm-4"
                 type="number"
@@ -115,7 +144,7 @@ export function Drilling() {
               />
             </div>
             <div>
-              <label>Offset No:</label>
+              <label>Offset No</label>
               <input
                 className="form-group col-sm-4"
                 type="number"
@@ -125,7 +154,7 @@ export function Drilling() {
             </div>
 
             <div>
-              <label>RPM:</label>
+              <label>RPM</label>
               <input
                 className="form-group col-sm-4"
                 type="number"
@@ -134,12 +163,41 @@ export function Drilling() {
               />
             </div>
             <div>
-              <label>Feed:</label>
+              <label>Feed</label>
               <input
                 className="form-group col-sm-4"
                 type="number"
                 onChange={e => setFeed(e.target.value)}
                 value={feed}
+              />
+            </div>
+            <div>
+              <label>CenterBit Depth</label>
+              <input
+                className="form-group col-sm-4"
+                type="number"
+                onChange={e => setCenterBit(e.target.value)}
+                value={centerBit}
+              />
+            </div>
+            <div>
+              <label>Peck Drill</label>
+              <input
+                className="form-group col-sm-4"
+                type="checkbox"
+                checked={!!peckDrill}
+                onChange={e => setPeckDrill('true')}
+                value={peckDrill}
+              />
+            </div>
+            <div>
+              <label>Program End</label>
+              <input
+                className="form-group col-sm-4"
+                type="checkbox"
+                checked={!!programEnd}
+                onChange={e => setProgramEnd('true')}
+                value={programEnd}
               />
             </div>
           </form>
@@ -168,7 +226,11 @@ export function Drilling() {
             >
               Generate Program
             </button>
-            <button type="button" className="btn btn-primary w-75">
+            <button
+              type="submit"
+              className="btn btn-primary w-75"
+              onClick={e => clearAll(e)}
+            >
               Clear ALL
             </button>
           </div>
@@ -181,7 +243,11 @@ export function Drilling() {
             >
               Download
             </button>
-            <button type="button" className="btn btn-primary w-75">
+            <button
+              type="button"
+              className="btn btn-primary w-75"
+              onClick={deleteProgram}
+            >
               Delete
             </button>
           </div>
