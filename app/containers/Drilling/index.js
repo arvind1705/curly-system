@@ -59,7 +59,7 @@ export function Drilling() {
       e,
     );
 
-    fetch('http://www.mocky.io/v2/5ec67e7a3200007900d74e90', {
+    fetch('https://www.mocky.io/v2/5ec67e7a3200007900d74e90', {
       method: 'POST',
       body: JSON.stringify({
         tool_no: tool,
